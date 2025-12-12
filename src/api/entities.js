@@ -51,6 +51,8 @@ export const CommunityMessage = makeEntity('CommunityMessage');
 export const CommunityMessages = CommunityMessage;
 export const ChizukYomi = makeEntity('ChizukYomi');
 
+export const DesignTemplate = makeEntity('DesignTemplate');
+
 export const Entities = {
   Settings,
   SlideSettings,
@@ -74,5 +76,7 @@ export const Entities = {
   CommunityGallery,
   CommunityMessage,
   CommunityMessages,
-  ChizukYomi
+  ChizukYomi,
+  DesignTemplate
 };
+
