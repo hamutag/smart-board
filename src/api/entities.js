@@ -1,118 +1,85 @@
-﻿/* Local DB stubs with persistence (no Base44). */
+﻿const API = "/api/entities";
 
-const SINGLETONS = new Set([
-  'Settings',
-  'SlideSettings',
-  'ShabbatTimes',
-  'BoardSchedule',
-  'Schedule'
-]);
+async function req(method, entity, id, data) {
+  const url = new URL(API, window.location.origin);
+  url.searchParams.set("entity", entity);
+  if (id) url.searchParams.set("id", id);
 
-function safeParse(json, fallback) {
-  try { return JSON.parse(json); } catch { return fallback; }
-}
+  const res = await fetch(url.toString(), {
+    method,
+    headers: { "Content-Type": "application/json" },
+    body: data ? JSON.stringify(data) : undefined,
+  });
 
-function storageKey(name) {
-  return `smartboard:${name}`;
-}
-
-function loadStore(name) {
-  if (typeof localStorage === 'undefined') return [];
-  const raw = localStorage.getItem(storageKey(name));
-  const arr = safeParse(raw, []);
-  return Array.isArray(arr) ? arr : [];
-}
-
-function saveStore(name, arr) {
-  if (typeof localStorage === 'undefined') return;
-  localStorage.setItem(storageKey(name), JSON.stringify(arr));
-}
-
-function ensureSingleton(name, arr) {
-  if (!SINGLETONS.has(name)) return arr;
-  if (arr.length > 0) return arr;
-  const item = { id: 'default' };
-  arr.push(item);
-  return arr;
-}
-
-function makeEntity(name) {
-  let store = ensureSingleton(name, loadStore(name));
-
-  function persist() {
-    saveStore(name, store);
+  if (!res.ok) {
+    const t = await res.text().catch(() => "");
+    throw new Error(`API ${method} ${entity} failed: ${res.status} ${t}`);
   }
+  return await res.json();
+}
 
+function makeEntity(entityName) {
   return {
-    name,
-
+    name: entityName,
     async list() {
-      store = ensureSingleton(name, loadStore(name));
-      return store;
+      const out = await req("GET", entityName);
+      return Array.isArray(out) ? out : [];
     },
-
     async get(id) {
-      store = ensureSingleton(name, loadStore(name));
-      return store.find(x => x && x.id === id) ?? null;
+      if (!id) return null;
+      return await req("GET", entityName, id);
     },
-
     async create(data) {
-      store = ensureSingleton(name, loadStore(name));
-      const id = (globalThis.crypto && globalThis.crypto.randomUUID)
-        ? globalThis.crypto.randomUUID()
-        : (Date.now() + '-' + Math.random().toString(16).slice(2));
-      const item = { id, ...(data || {}) };
-      store.push(item);
-      persist();
-      return item;
+      return await req("POST", entityName, null, data || {});
     },
-
     async update(id, data) {
-      store = ensureSingleton(name, loadStore(name));
-      const i = store.findIndex(x => x && x.id === id);
-      if (i === -1) return null;
-      store[i] = { ...store[i], ...(data || {}), id };
-      persist();
-      return store[i];
+      if (!id) return null;
+      return await req("PUT", entityName, id, data || {});
     },
-
     async remove(id) {
-      store = ensureSingleton(name, loadStore(name));
-      const i = store.findIndex(x => x && x.id === id);
-      if (i === -1) return false;
-      store.splice(i, 1);
-      persist();
+      if (!id) return false;
+      await req("DELETE", entityName, id);
       return true;
-    }
+    },
   };
 }
 
-/* Export every entity name the app imports */
-export const Settings = makeEntity('Settings');
-export const SlideSettings = makeEntity('SlideSettings');
-export const Schedule = makeEntity('Schedule');
-export const BoardSchedule = makeEntity('BoardSchedule');
-export const Announcement = makeEntity('Announcement');
+export const Settings = makeEntity("Settings");
+export const SlideSettings = makeEntity("SlideSettings");
+export const Schedule = makeEntity("Schedule");
+export const BoardSchedule = makeEntity("BoardSchedule");
+
+export const Announcement = makeEntity("Announcement");
 export const Announcements = Announcement;
-export const DailyZmanim = makeEntity('DailyZmanim');
+
+export const DailyZmanim = makeEntity("DailyZmanim");
 export const Zmanim = DailyZmanim;
-export const ShabbatTimes = makeEntity('ShabbatTimes');
-export const SmartMessage = makeEntity('SmartMessage');
+
+export const ShabbatTimes = makeEntity("ShabbatTimes");
+
+export const SmartMessage = makeEntity("SmartMessage");
 export const SmartMessages = SmartMessage;
-export const Halacha = makeEntity('Halacha');
-export const Halachot = makeEntity('Halachot');
-export const HalachaYomit = makeEntity('HalachaYomit');
-export const Bracha = makeEntity('Bracha');
-export const Brachos = makeEntity('Brachos');
-export const Niftarim = makeEntity('Niftarim');
-export const NiftarWeekly = makeEntity('NiftarWeekly');
-export const RefuahShelema = makeEntity('RefuahShelema');
-export const LeiluyNishmat = makeEntity('LeiluyNishmat');
-export const CommunityGallery = makeEntity('CommunityGallery');
-export const CommunityMessage = makeEntity('CommunityMessage');
+
+export const Halacha = makeEntity("Halacha");
+export const Halachot = Halacha;
+export const HalachaYomit = makeEntity("HalachaYomit");
+
+export const Bracha = makeEntity("Bracha");
+export const Brachos = Bracha;
+
+export const Niftarim = makeEntity("Niftarim");
+export const NiftarWeekly = makeEntity("NiftarWeekly");
+
+export const RefuahShelema = makeEntity("RefuahShelema");
+export const LeiluyNishmat = makeEntity("LeiluyNishmat");
+
+export const CommunityGallery = makeEntity("CommunityGallery");
+export const CommunityMessage = makeEntity("CommunityMessage");
 export const CommunityMessages = CommunityMessage;
-export const ChizukYomi = makeEntity('ChizukYomi');
-export const DesignTemplate = makeEntity('DesignTemplate');
+
+export const ChizukYomi = makeEntity("ChizukYomi");
+
+export const DesignTemplate = makeEntity("DesignTemplate");
 
 export const Entities = {
   Settings,
@@ -139,7 +106,5 @@ export const Entities = {
   CommunityMessage,
   CommunityMessages,
   ChizukYomi,
-  DesignTemplate
+  DesignTemplate,
 };
-
-export default Entities;
