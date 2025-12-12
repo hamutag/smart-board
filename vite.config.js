@@ -21,4 +21,9 @@ export default defineConfig({
       },
     },
   },
-}) 
+  build: {
+    rollupOptions: {
+      external: ['@hello-pangea/dnd']
+    }
+  }
+})
