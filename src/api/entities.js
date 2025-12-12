@@ -1,4 +1,4 @@
-﻿/** Universal stub entities – Base44 fully disabled */
+﻿/** Auto-generated stub entities (Base44 disabled) */
 
 function makeEntity(name) {
   let store = [];
@@ -7,7 +7,7 @@ function makeEntity(name) {
     async list() { return store; },
     async get(id) { return store.find(x => x?.id === id) ?? null; },
     async create(data) {
-      const id = `${Date.now()}-${Math.random()}`;
+      const id = ${Date.now()}-;
       const item = { id, ...data };
       store.push(item);
       return item;
@@ -27,40 +27,40 @@ function makeEntity(name) {
   };
 }
 
-const registry = new Proxy({}, {
-  get(target, prop) {
-    if (!target[prop]) {
-      target[prop] = makeEntity(prop);
-    }
-    return target[prop];
-  }
-});
+export const Announcement = makeEntity('Announcement');
+export const BoardSchedule = makeEntity('BoardSchedule');
+export const Bracha = makeEntity('Bracha');
+export const ChizukEntity = makeEntity('ChizukEntity');
+export const ChizukYomi = makeEntity('ChizukYomi');
+export const CommunityGallery = makeEntity('CommunityGallery');
+export const CommunityMessage = makeEntity('CommunityMessage');
+export const DailyZmanim = makeEntity('DailyZmanim');
+export const DesignTemplate = makeEntity('DesignTemplate');
+export const Halacha = makeEntity('Halacha');
+export const LeiluyNishmat = makeEntity('LeiluyNishmat');
+export const NiftarWeekly = makeEntity('NiftarWeekly');
+export const RefuahShelema = makeEntity('RefuahShelema');
+export const Settings = makeEntity('Settings');
+export const ShabbatTimes = makeEntity('ShabbatTimes');
+export const SlideSettings = makeEntity('SlideSettings');
+export const SmartMessage = makeEntity('SmartMessage');
 
-// Explicit exports used across the app
-export const Settings = registry.Settings;
-export const SlideSettings = registry.SlideSettings;
-export const Schedule = registry.Schedule;
-export const Announcement = registry.Announcement;
-export const Announcements = registry.Announcement;
-export const DailyZmanim = registry.DailyZmanim;
-export const Zmanim = registry.DailyZmanim;
-export const ShabbatTimes = registry.ShabbatTimes;
-export const SmartMessage = registry.SmartMessage;
-export const SmartMessages = registry.SmartMessage;
-export const Halachot = registry.Halachot;
-export const Halacha = registry.Halacha;
-export const HalachaYomit = registry.HalachaYomit;
-export const Brachos = registry.Brachos;
-export const Bracha = registry.Bracha;
-export const Niftarim = registry.Niftarim;
-export const NiftarWeekly = registry.NiftarWeekly;
-export const RefuahShelema = registry.RefuahShelema;
-export const LeiluyNishmat = registry.LeiluyNishmat;
-export const CommunityGallery = registry.CommunityGallery;
-export const CommunityMessage = registry.CommunityMessage;
-export const CommunityMessages = registry.CommunityMessage;
-export const ChizukYomi = registry.ChizukYomi;
-export const DesignTemplate = registry.DesignTemplate;
-
-// Generic container
-export const Entities = registry;
+export const Entities = {
+  Announcement,
+  BoardSchedule,
+  Bracha,
+  ChizukEntity,
+  ChizukYomi,
+  CommunityGallery,
+  CommunityMessage,
+  DailyZmanim,
+  DesignTemplate,
+  Halacha,
+  LeiluyNishmat,
+  NiftarWeekly,
+  RefuahShelema,
+  Settings,
+  ShabbatTimes,
+  SlideSettings,
+  SmartMessage,
+};
