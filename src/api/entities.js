@@ -5,21 +5,21 @@ function makeEntity(name) {
   return {
     name,
     async list() { return store; },
-    async get(id) { return store.find(x => x?.id === id) ?? null; },
+    async get(id) { return store.find(x => x && x.id === id) ?? null; },
     async create(data) {
-      const id = ${Date.now()}-;
+      const id = String(Date.now()) + '-' + String(Math.random());
       const item = { id, ...data };
       store.push(item);
       return item;
     },
     async update(id, data) {
-      const i = store.findIndex(x => x?.id === id);
+      const i = store.findIndex(x => x && x.id === id);
       if (i === -1) return null;
       store[i] = { ...store[i], ...data, id };
       return store[i];
     },
     async remove(id) {
-      const i = store.findIndex(x => x?.id === id);
+      const i = store.findIndex(x => x && x.id === id);
       if (i === -1) return false;
       store.splice(i, 1);
       return true;
@@ -64,3 +64,4 @@ export const Entities = {
   SlideSettings,
   SmartMessage,
 };
+
