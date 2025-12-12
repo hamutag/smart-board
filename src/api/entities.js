@@ -52,6 +52,7 @@ export const SlideSettings = makeEntity('SlideSettings');
 export const SmartMessage = makeEntity('SmartMessage');
 export const Brachos = makeEntity('Brachos');
 export const Halachot = makeEntity('Halachot');
+export const Halacha = makeEntity('Halacha');
 export const Niftarim = makeEntity('Niftarim');
 export const RefuahShelema = makeEntity('RefuahShelema');
 export const LeiluyNishmat = makeEntity('LeiluyNishmat');
@@ -68,9 +69,11 @@ export const Entities = {
   SmartMessage,
   Brachos,
   Halachot,
+  Halacha,
   Niftarim,
   RefuahShelema,
   LeiluyNishmat,
   CommunityGallery,
   Schedule
 };
+
