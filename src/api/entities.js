@@ -15,6 +15,7 @@ async function req(method, entity, id, data) {
     const t = await res.text().catch(() => "");
     throw new Error(`API ${method} ${entity} failed: ${res.status} ${t}`);
   }
+
   return await res.json();
 }
 
@@ -108,3 +109,5 @@ export const Entities = {
   ChizukYomi,
   DesignTemplate,
 };
+
+export default Entities;
