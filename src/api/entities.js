@@ -1,9 +1,9 @@
 ﻿/**
  * Local stub entities (Base44 disabled).
- * This file exports the same entity names used across the app,
- * but stores data locally (in-memory) so build/runtime won't redirect to Base44.
+ * Exports the entity names used across the app (including common singular/plural aliases)
+ * so the project builds and runs without Base44.
  *
- * Next step: replace implementations with a real DB (Supabase/Firebase/etc).
+ * Next step: replace these implementations with a real DB (Supabase/Firebase/etc).
  */
 
 function makeEntity(name) {
@@ -43,40 +43,58 @@ function makeEntity(name) {
   };
 }
 
-// Export all entities referenced by pages/components
+// Core exports
 export const Settings = makeEntity('Settings');
-export const Announcement = makeEntity('Announcement');
-export const DailyZmanim = makeEntity('DailyZmanim');
-export const ShabbatTimes = makeEntity('ShabbatTimes');
 export const SlideSettings = makeEntity('SlideSettings');
-export const SmartMessage = makeEntity('SmartMessage');
-export const Brachos = makeEntity('Brachos');
-export const Halachot = makeEntity('Halachot');
-export const Halacha = makeEntity('Halacha');
-export const Niftarim = makeEntity('Niftarim');
-export const NiftarWeekly = makeEntity('NiftarWeekly');
-export const RefuahShelema = makeEntity('RefuahShelema');
-export const LeiluyNishmat = makeEntity('LeiluyNishmat');
-export const CommunityGallery = makeEntity('CommunityGallery');
 export const Schedule = makeEntity('Schedule');
 
-// Also keep a generic export if some code imports Entities
+export const Announcement = makeEntity('Announcement');
+export const Announcements = Announcement; // alias
+
+export const DailyZmanim = makeEntity('DailyZmanim');
+export const Zmanim = DailyZmanim; // alias
+
+export const ShabbatTimes = makeEntity('ShabbatTimes');
+
+export const SmartMessage = makeEntity('SmartMessage');
+export const SmartMessages = SmartMessage; // alias
+
+export const Halachot = makeEntity('Halachot');
+export const Halacha = makeEntity('Halacha'); // some code uses singular
+export const HalachaYomit = makeEntity('HalachaYomit'); // alias used in some apps
+
+export const Brachos = makeEntity('Brachos');
+export const Bracha = makeEntity('Bracha'); // singular alias
+
+export const Niftarim = makeEntity('Niftarim');
+export const NiftarWeekly = makeEntity('NiftarWeekly');
+
+export const RefuahShelema = makeEntity('RefuahShelema');
+
+export const LeiluyNishmat = makeEntity('LeiluyNishmat');
+
+export const CommunityGallery = makeEntity('CommunityGallery');
+
+// If some code imports Entities as a generic container
 export const Entities = {
   Settings,
-  Announcement,
-  DailyZmanim,
-  ShabbatTimes,
   SlideSettings,
+  Schedule,
+  Announcement,
+  Announcements,
+  DailyZmanim,
+  Zmanim,
+  ShabbatTimes,
   SmartMessage,
-  Brachos,
+  SmartMessages,
   Halachot,
   Halacha,
+  HalachaYomit,
+  Brachos,
+  Bracha,
   Niftarim,
   NiftarWeekly,
   RefuahShelema,
   LeiluyNishmat,
-  CommunityGallery,
-  Schedule
+  CommunityGallery
 };
-
-
