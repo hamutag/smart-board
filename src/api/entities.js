@@ -54,6 +54,7 @@ export const Brachos = makeEntity('Brachos');
 export const Halachot = makeEntity('Halachot');
 export const Halacha = makeEntity('Halacha');
 export const Niftarim = makeEntity('Niftarim');
+export const NiftarWeekly = makeEntity('NiftarWeekly');
 export const RefuahShelema = makeEntity('RefuahShelema');
 export const LeiluyNishmat = makeEntity('LeiluyNishmat');
 export const CommunityGallery = makeEntity('CommunityGallery');
@@ -71,9 +72,11 @@ export const Entities = {
   Halachot,
   Halacha,
   Niftarim,
+  NiftarWeekly,
   RefuahShelema,
   LeiluyNishmat,
   CommunityGallery,
   Schedule
 };
+
 
