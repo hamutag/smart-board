@@ -86,6 +86,9 @@ export const CommunityGallery = makeEntity('CommunityGallery');
 export const CommunityMessage = makeEntity('CommunityMessage');
 export const CommunityMessages = CommunityMessage; // alias
 
+// Chizuk
+export const ChizukYomi = makeEntity('ChizukYomi');
+
 // Generic container (some code might import Entities)
 export const Entities = {
   Settings,
@@ -109,5 +112,7 @@ export const Entities = {
   LeiluyNishmat,
   CommunityGallery,
   CommunityMessage,
-  CommunityMessages
+  CommunityMessages,
+  ChizukYomi
 };
+
