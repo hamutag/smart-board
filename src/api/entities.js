@@ -73,7 +73,13 @@ export const RefuahShelema = makeEntity('RefuahShelema');
 
 export const LeiluyNishmat = makeEntity('LeiluyNishmat');
 
-export const CommunityGallery = makeEntity('CommunityGallery');
+export const CommunityGallery,
+  CommunityMessage,
+  CommunityMessages = makeEntity('CommunityGallery,
+  CommunityMessage,
+  CommunityMessages');
+export const CommunityMessage = makeEntity('CommunityMessage');
+export const CommunityMessages = CommunityMessage;
 
 // If some code imports Entities as a generic container
 export const Entities = {
@@ -96,5 +102,8 @@ export const Entities = {
   NiftarWeekly,
   RefuahShelema,
   LeiluyNishmat,
-  CommunityGallery
+  CommunityGallery,
+  CommunityMessage,
+  CommunityMessages
 };
+
